@@ -1,5 +1,7 @@
 # IvanaFin for Samsung
 
+<p align="center"><img src="cat.jpg" width="240" alt="The cat on IvanaFin's welcome screen"><br><sub>The cat on IvanaFin's welcome screen</sub></p>
+
 IvanaFin is a [Jellyfin](https://jellyfin.org) app for Samsung smart TVs (Tizen), with its own look:
 a big-tile home screen, full-screen film and show pages, a music library in the style of a TV music app,
 and extras for Star Wars films and shows. It is the Samsung version of
