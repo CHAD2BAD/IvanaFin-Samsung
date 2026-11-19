@@ -30,11 +30,18 @@ Everything else works with a plain Jellyfin server, but **Discover only appears 
 [Seerr](https://github.com/seerr-team/seerr) set up**. Without it, the Discover tile and button are hidden.
 To turn it on:
 
-1. Install and set up Seerr, connected to your Jellyfin server (and to Radarr / Sonarr so requests
-   are downloaded).
-2. Install the [Jellyfin Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) plugin on your
+1. Set up the download side first. All of these are needed - Discover depends on them working together:
+   - [Radarr](https://github.com/Radarr/Radarr) (films) and [Sonarr](https://github.com/Sonarr/Sonarr) (shows),
+     with a download client (for example qBittorrent).
+   - [Prowlarr](https://github.com/Prowlarr/Prowlarr), connected to Radarr and Sonarr: it gives them the
+     indexers to search. Without it, requests are accepted but nothing is ever found.
+   - [Cleanuparr](https://github.com/Cleanuparr/Cleanuparr), connected to Radarr and Sonarr: it removes
+     stuck or stalled downloads and searches again. Without it, a request can sit at "Downloading" forever.
+2. Install and set up [Seerr](https://github.com/seerr-team/seerr), connected to your Jellyfin server and to
+   Radarr / Sonarr.
+3. Install the [Jellyfin Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) plugin on your
    Jellyfin server and enter your Seerr address and API key in its settings.
-3. Restart IvanaFin on the TV.
+4. Restart IvanaFin on the TV.
 
 ## Install
 
