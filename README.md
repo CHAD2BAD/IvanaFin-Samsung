@@ -1,15 +1,15 @@
-# IvanaFin for Samsung
+# IvanaFin for Samsung and Jellyfin web
 
 <p align="center"><img src="cat.jpg" width="240" alt="Ivana"><br><sub>Ivana thanks you for downloading</sub></p>
 
 IvanaFin is a [Jellyfin](https://jellyfin.org) app for Samsung smart TVs (Tizen), with its own look:
 a big-tile home screen, full-screen film and show pages, a music library in the style of a TV music app,
 and extras for Star Wars films and shows. It is the Samsung version of
-[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin-Android). For the same look in a
-browser, see [IvanaFin for Jellyfin web](https://github.com/CHAD2BAD/IvanaFin-Web).
+[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin-Android). The same look is also
+available for Jellyfin in a browser: see [Jellyfin web](#jellyfin-web).
 
-It works with **any Jellyfin server**. Nothing needs to be installed on the server: the IvanaFin look is
-built into the app.
+The Samsung app works with **any Jellyfin server**. Nothing needs to be installed on the server: the IvanaFin
+look is built into the app.
 
 > **Status:** early. The same scripts run on the author's Samsung S90D (Tizen 9); this any-server build is new.
 
@@ -57,11 +57,12 @@ To turn it on:
    - **Services:** pick the default Radarr and Sonarr server, with a root folder and quality profile that
      really exist there (a wrong root folder makes every request fail).
 3. Install the [Jellyfin Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) plugin on your
-   Jellyfin server and enter your Seerr address and API key in its settings.
+   Jellyfin server and enter your Seerr address and API key in its settings (Samsung and web use it).
 4. **Cancel button (recommended):** run the small [IvanaFin Seerr helper](seerr-helper) with Docker
    on the same machine as Jellyfin. It gives Discover a real **Cancel**: the request is removed in Seerr
-   *and* the download is stopped in Radarr / Sonarr. Without it, the Cancel button isn't shown.
-5. Restart IvanaFin on the TV.
+   *and* the download is stopped in Radarr / Sonarr. Without it, the Cancel button isn't shown. (On Jellyfin
+   web it only works when Jellyfin is opened over `http`, on your home network.)
+5. Restart IvanaFin on the TV, or reload Jellyfin web.
 
 ## Install
 
@@ -78,6 +79,57 @@ app for your TV:
 IvanaFin installs next to the official Jellyfin app (it has its own app id). To update it, install a newer
 `IvanaFin.wgt` the same way.
 
+## Jellyfin web
+
+The same IvanaFin look for Jellyfin in a **browser**, on your own server. It is added once, through the
+[JavaScript Injector](https://github.com/n00bcodr/Jellyfin-JavaScript-Injector) plugin; your server then loads
+IvanaFin from this repository, so it stays up to date by itself. It changes Jellyfin web for **everyone** who
+uses your server in a browser, and brings the ElegantFin theme with IvanaFin's colours - if you already use a
+theme in *Dashboard > General > Custom CSS*, remove it. Tested with Jellyfin 12.4.
+
+**With the installer** (Windows, macOS, Linux)
+
+1. In Jellyfin: **Dashboard > API Keys > +**, name it "IvanaFin", and copy the key.
+2. Download [web/install.ps1](web/install.ps1) (*Download raw file* button) and run it with your server's address:
+
+   ```
+   powershell -ExecutionPolicy Bypass -File install.ps1 -Server http://<your-server>:8096
+   ```
+
+   On macOS / Linux use [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell):
+   `pwsh -File install.ps1 -Server http://<your-server>:8096`
+
+   It asks for the API key. If the JavaScript Injector plugin isn't there yet, it installs it and asks
+   to restart Jellyfin once (in Docker, start the container again if it stops instead of restarting).
+3. Open Jellyfin in your browser and reload the page (**Ctrl+F5**).
+
+**By hand**
+
+1. **Dashboard > Plugins > Repositories** (or *Catalog* > the settings icon): add a repository named
+   `n00bcodr Plugins` with the URL
+   `https://raw.githubusercontent.com/n00bcodr/jellyfin-plugins/main/manifest.json`
+2. **Dashboard > Plugins > Catalog**: install **JavaScript Injector**, then restart Jellyfin.
+3. **Dashboard > Plugins > JavaScript Injector**: add a script named `IvanaFin`, paste this, make sure it is
+   enabled, and save:
+
+   ```js
+   // IvanaFin for Jellyfin web - https://github.com/CHAD2BAD/IvanaFin-Samsung#jellyfin-web
+   (function () {
+     if (window.IvfWebLoader) return; window.IvfWebLoader = true;
+     var s = document.createElement('script');
+     s.src = 'https://cdn.jsdelivr.net/gh/CHAD2BAD/IvanaFin-Samsung@main/web/ivanafin.js';
+     s.onerror = function () { console.error('IvanaFin could not be loaded from ' + s.src); };
+     (document.head || document.documentElement).appendChild(s);
+   })();
+   ```
+4. Reload Jellyfin in your browser (**Ctrl+F5**).
+
+Updates arrive by themselves within about 12 hours of a new version here (that's how long the
+[jsDelivr](https://www.jsdelivr.com) copy is kept).
+
+**To remove it:** run the installer again with `-Uninstall` at the end, or delete the `IvanaFin` script under
+**Dashboard > Plugins > JavaScript Injector**, then reload the page.
+
 ## Build it yourself
 
 Windows PowerShell, with a Jellyfin server's web client on the same computer:
@@ -89,11 +141,15 @@ powershell -File build.ps1 [-WebDir <folder of jellyfin-web>]
 This writes `IvanaFin.wgt` (unsigned). `-WebDir` defaults to `C:\Program Files\Jellyfin\Server\jellyfin-web`.
 Use the web client of the same Jellyfin version as your server.
 
+The web version: `powershell -File web\build.ps1` joins `scripts\` and `web\boot.js` into `web\ivanafin.js`,
+the file Jellyfin web loads.
+
 ## Credits and licences
 
 - **Jellyfin** web client (inside the `.wgt`) - GPL-2.0. The Tizen shell (`tizen.js`, `config.xml`) follows
   [jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen) - MPL-2.0.
 - **ElegantFin** theme by lscambo13 (loaded from its CDN) - see its own licence.
+- **JavaScript Injector** and **Jellyfin Enhanced** plugins by n00bcodr.
 - **Star Wars facts** shown in the Planets / Characters / Starships rows are summarised from
   [Wookieepedia](https://starwars.fandom.com) (text under CC BY-SA 3.0). The pictures are copies from
   Wookieepedia kept in the [IvanaFin repo](https://github.com/CHAD2BAD/IvanaFin-Android/tree/main/extras/star-wars);
