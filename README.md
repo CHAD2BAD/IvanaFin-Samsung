@@ -15,6 +15,8 @@ look is built into the app.
 
 ## What you get
 
+<p align="center"><img src="home.jpg" width="720" alt="IvanaFin home screen with four big tiles: Movies, TV, Songs and Other"><br><sub>The home screen on a Samsung TV</sub></p>
+
 - **Home:** big tiles for your libraries. The first time, IvanaFin shows your biggest Movies, Shows and
   Music library, plus a library named **Other** if you have one. To choose the tiles yourself, open Jellyfin's
   **Settings > Home**: the library order and the *Display in My Media* ticks decide which tiles appear
