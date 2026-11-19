@@ -98,5 +98,7 @@ Api $cfgPath 'Post' $cfg | Out-Null
 $check = @((Api $cfgPath).CustomJavaScripts | Where-Object { $_.Name -eq $ScriptName -and $_.Enabled })
 if (-not $check) { throw 'Saving the script in JavaScript Injector failed.' }
 ''
-'IvanaFin is installed. Open Jellyfin in your browser and reload the page (Ctrl+F5).'
+'IvanaFin is installed.'
+'Now open Jellyfin in your browser: Settings > Display > Display mode = Desktop (Legacy), save, and reload the page (Ctrl+F5).'
+'(This is remembered per browser - do it once on every computer / browser.)'
 'For Discover, see "Discover needs Seerr" in the README.'

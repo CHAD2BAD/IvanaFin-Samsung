@@ -87,6 +87,10 @@ IvanaFin from this repository, so it stays up to date by itself. It changes Jell
 uses your server in a browser, and brings the ElegantFin theme with IvanaFin's colours - if you already use a
 theme in *Dashboard > General > Custom CSS*, remove it. Tested with Jellyfin 12.4.
 
+> **Important:** IvanaFin web needs the **Desktop (Legacy)** display mode. After installing, each person opens
+> Jellyfin in their browser, goes to **Settings > Display**, sets **Display mode** to **Desktop (Legacy)**, saves and
+> reloads the page. This is remembered per browser, so do it once on every computer / browser.
+
 **With the installer** (Windows, macOS, Linux)
 
 1. In Jellyfin: **Dashboard > API Keys > +**, name it "IvanaFin", and copy the key.
@@ -101,7 +105,8 @@ theme in *Dashboard > General > Custom CSS*, remove it. Tested with Jellyfin 12.
 
    It asks for the API key. If the JavaScript Injector plugin isn't there yet, it installs it and asks
    to restart Jellyfin once (in Docker, start the container again if it stops instead of restarting).
-3. Open Jellyfin in your browser and reload the page (**Ctrl+F5**).
+3. Open Jellyfin in your browser, set **Settings > Display > Display mode** to **Desktop (Legacy)**, and reload the
+   page (**Ctrl+F5**).
 
 **By hand**
 
@@ -122,7 +127,7 @@ theme in *Dashboard > General > Custom CSS*, remove it. Tested with Jellyfin 12.
      (document.head || document.documentElement).appendChild(s);
    })();
    ```
-4. Reload Jellyfin in your browser (**Ctrl+F5**).
+4. In Jellyfin, set **Settings > Display > Display mode** to **Desktop (Legacy)**, then reload the page (**Ctrl+F5**).
 
 Updates arrive by themselves within about 12 hours of a new version here (that's how long the
 [jsDelivr](https://www.jsdelivr.com) copy is kept).
