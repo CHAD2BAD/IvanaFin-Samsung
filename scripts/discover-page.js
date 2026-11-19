@@ -32,7 +32,32 @@
   var heroFor = null;      // item shown in the Discover tab's header
 
   function get(path, query) {
-    return ApiClient.ajax({ type: 'GET', url: ApiClient.getUrl('/JellyfinEnhanced/jellyseerr/' + path, query || {}), dataType: 'json' });
+    return ApiClient.ajax({ type: 'GET', url: ApiClient.getUrl('/JellyfinEnhanced/jellyseerr/' + path, query || {}), dataType: 'json' })
+      .then(dropCancelled);
+  }
+  // Enhanced keeps Seerr answers for up to 10 minutes (JellyseerrResponseCacheTtlMinutes) and doesn't know
+  // about a Cancel made through the IvanaFin helper, so for a while it still says "Pending · Downloading".
+  // Titles cancelled here are remembered (this tab, 15 min) and their old request / download info dropped.
+  var CANCEL_KEY = 'ivf-dsc-cancelled', CANCEL_MS = 15 * 60000;
+  function cancelledMap() {
+    var m = {}; try { m = JSON.parse(sessionStorage.getItem(CANCEL_KEY) || '{}') || {}; } catch (e) {}
+    var now = Date.now(); Object.keys(m).forEach(function (k) { if (now - m[k] > CANCEL_MS) delete m[k]; });
+    return m;
+  }
+  function markCancelled(type, id, on) {
+    var m = cancelledMap(); if (on) m[type + ':' + id] = Date.now(); else delete m[type + ':' + id];
+    try { sessionStorage.setItem(CANCEL_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function dropCancelled(data) {
+    var m = cancelledMap(); if (!data || !Object.keys(m).length) return data;
+    function fix(i, type) {
+      if (!i || !i.mediaInfo || !m[(i.mediaType || type) + ':' + i.id]) return;
+      if (i.mediaInfo.status === 4 || i.mediaInfo.status === 5) { i.mediaInfo.requests = []; i.mediaInfo.downloadStatus = []; }
+      else delete i.mediaInfo; // shows "Request" again, like Seerr itself after the Cancel
+    }
+    fix(data, data.firstAirDate !== undefined || data.seasons ? 'tv' : 'movie');
+    (data.results || []).forEach(function (i) { fix(i, i.firstAirDate !== undefined ? 'tv' : 'movie'); });
+    return data;
   }
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function titleOf(i) { return i.title || i.name || ''; }
@@ -773,6 +798,7 @@
     var b = d.el.querySelector('.ivf-dd-btn[data-act="cancel"]'); if (b) b.disabled = true;
     var old = d.el.querySelector('.ivf-dd-cancel-msg'); if (old) old.remove();
     helper('POST', '/cancel', { type: d.type, tmdbId: d.id }).then(function () {
+      markCancelled(d.type, d.id, true);
       if (details.indexOf(d) < 0) return;
       d.canCancel = false; d.progress = null;
       loadDetails(d, false); // Request again (or Partly available for a show that had seasons)
@@ -1006,6 +1032,7 @@
       ? api.requestMedia(d.id, 'movie', settings, false, d.data)
       : api.requestTvSeasons(d.id, seasons.filter(function (s) { return st.selected[s.n]; }).map(function (s) { return s.n; }), settings, d.data, false);
     Promise.resolve(p).then(function () {
+      markCancelled(d.type, d.id, false); // requested again: show the real state
       if (dialogs.indexOf(dlg) >= 0) closeTop();
       loadDetails(d, false); // the button turns into Pending
     }, function (err) {
