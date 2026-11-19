@@ -3,7 +3,7 @@
 IvanaFin is a [Jellyfin](https://jellyfin.org) app for Samsung smart TVs (Tizen), with its own look:
 a big-tile home screen, full-screen film and show pages, a music library in the style of a TV music app,
 and extras for Star Wars films and shows. It is the Samsung version of
-[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin).
+[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin-Android).
 
 It works with **any Jellyfin server**. Nothing needs to be installed on the server: the IvanaFin look is
 built into the app.
@@ -69,7 +69,7 @@ Use the web client of the same Jellyfin version as your server.
 - **ElegantFin** theme by lscambo13 (loaded from its CDN) - see its own licence.
 - **Star Wars facts** shown in the Planets / Characters / Starships rows are summarised from
   [Wookieepedia](https://starwars.fandom.com) (text under CC BY-SA 3.0). The pictures are copies from
-  Wookieepedia kept in the [IvanaFin repo](https://github.com/CHAD2BAD/IvanaFin/tree/main/extras/star-wars);
+  Wookieepedia kept in the [IvanaFin repo](https://github.com/CHAD2BAD/IvanaFin-Android/tree/main/extras/star-wars);
   they belong to their owners. Star Wars is a trademark of Lucasfilm Ltd. This project is not affiliated
   with Lucasfilm or Disney.
 - **Deezer** data is used for artist pages through Deezer's public API; IvanaFin is not affiliated with Deezer.
