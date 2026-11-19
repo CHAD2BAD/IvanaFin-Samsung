@@ -3,7 +3,8 @@
 IvanaFin is a [Jellyfin](https://jellyfin.org) app for Samsung smart TVs (Tizen), with its own look:
 a big-tile home screen, full-screen film and show pages, a music library in the style of a TV music app,
 and extras for Star Wars films and shows. It is the Samsung version of
-[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin-Android).
+[IvanaFin for Android TV / Fire TV](https://github.com/CHAD2BAD/IvanaFin-Android). For the same look in a
+browser, see [IvanaFin for Jellyfin web](https://github.com/CHAD2BAD/IvanaFin-Web).
 
 It works with **any Jellyfin server**. Nothing needs to be installed on the server: the IvanaFin look is
 built into the app.
