@@ -22,9 +22,19 @@ built into the app.
 - **Star Wars extras** for the official films and shows (matched by their TMDB id): Featured Planets,
   Characters and Starships rows with a card for each, the in-universe year, the opening crawl and
   "In Story Order". A library that is mostly Star Wars gets a timeline sort button.
-- **Discover** (browse and request films and shows) appears when your server has the
-  [Jellyfin Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) plugin connected to
-  [Seerr](https://github.com/seerr-team/seerr).
+- **Discover** (browse and request films and shows) - **needs Seerr set up first** (see below).
+
+## Discover needs Seerr
+
+Everything else works with a plain Jellyfin server, but **Discover only appears if your server has
+[Seerr](https://github.com/seerr-team/seerr) set up**. Without it, the Discover tile and button are hidden.
+To turn it on:
+
+1. Install and set up Seerr, connected to your Jellyfin server (and to Radarr / Sonarr so requests
+   are downloaded).
+2. Install the [Jellyfin Enhanced](https://github.com/n00bcodr/Jellyfin-Enhanced) plugin on your
+   Jellyfin server and enter your Seerr address and API key in its settings.
+3. Restart IvanaFin on the TV.
 
 ## Install
 
