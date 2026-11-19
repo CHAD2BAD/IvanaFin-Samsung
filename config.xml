@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://ivanafin.local/IvanaFin" version="1.0.0" viewmodes="fullscreen">
+    <access origin="*" subdomains="true"></access>
+    <tizen:application id="IvanaFinTV.IvanaFin" package="IvanaFinTV" required_version="2.3"/>
+    <author>CHAD2BAD</author>
+    <content src="index.html"/>
+    <description>IvanaFin: Jellyfin for Samsung TV with the IvanaFin look built in - works with any Jellyfin server.</description>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <icon src="icon.png"/>
+    <tizen:metadata key="http://tizen.org/metadata/app_ui_type/base_screen_resolution" value="fullscreen"/>
+    <name>IvanaFin</name>
+    <tizen:privilege name="http://developer.samsung.com/privilege/productinfo"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <!-- Games tile: opens the Moonlight app (MoonLightS.MoonlightWasm) -->
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:profile name="tv"/>
+    <tizen:setting screen-orientation="auto-rotation" context-menu="enable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+</widget>
