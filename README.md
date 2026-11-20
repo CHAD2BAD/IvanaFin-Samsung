@@ -31,6 +31,8 @@ look is built into the app.
 
 ## Discover needs Seerr
 
+<p align="center"><img src="discover.jpg" width="720" alt="IvanaFin Discover page: a featured film at the top and a Trending row of posters"><br><sub>Discover on a Samsung TV</sub></p>
+
 Everything else works with a plain Jellyfin server, but **Discover only appears if your server has
 [Seerr](https://github.com/seerr-team/seerr) set up**. Without it, the Discover tile and button are hidden.
 To turn it on:
